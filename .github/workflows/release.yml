@@ -44,6 +44,11 @@ jobs:
         run: |
           echo "${{ secrets.GPG_SECRET }}" > ${{ github.workspace }}/secret-key.gpg
           chmod 600 ${{ github.workspace }}/secret-key.gpg
+          export GPG_TTY=$(tty)
+          gpg --import --batch ${{ github.workspace }}/secret-key.gpg
+          echo "allow-loopback-pinentry" >> ~/.gnupg/gpg-agent.conf
+          echo "use-agent" > ~/.gnupg/gpg.conf
+          echo "pinentry-mode loopback" > ~/.gnupg/gpg.conf
 
       - name: Prepare release
         run: |
@@ -53,9 +58,7 @@ jobs:
         run: |
           export NEXUS_USERNAME=${{ vars.NEXUS_USERNAME }}
           export NEXUS_PASSWORD=${{ secrets.NEXUS_PASSWORD }}
-          export MAVEN_GPG_PASSPHRASE=${{ secrets.GPG_PASSPHRASE }}
-          export MAVEN_GPG_KEY_FINGERPRINT=${{ secrets.GPG_KEYID }}
-          mvn -Dgpg.keyFingerprint="${{ secrets.GPG_KEYID }}" -Dgpg.keyFilePath="${{ github.workspace }}/secret-key.gpg" release:perform
+          mvn -Dgpg.keyFingerprint="${{ secrets.GPG_KEYID }}" -Dgpg.passphrase="${{ secrets.GPG_PASSPHRASE }}" release:perform
 
       - name: Push changes and tags
         run: |

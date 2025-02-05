@@ -45,6 +45,10 @@ jobs:
           echo "${{ secrets.GPG_SECRET }}" > ${{ github.workspace }}/secret-key.gpg
           chmod 600 ${{ github.workspace }}/secret-key.gpg
 
+      - name: Prepare release
+        run: |
+          mvn release:prepare
+
       - name: Publish release
         run: |
           export NEXUS_USERNAME=${{ vars.NEXUS_USERNAME }}
@@ -52,10 +56,6 @@ jobs:
           export MAVEN_GPG_PASSPHRASE=${{ secrets.GPG_PASSPHRASE }}
           export MAVEN_GPG_KEY_FINGERPRINT=${{ secrets.GPG_KEYID }}
           mvn -Dgpg.keyFingerprint="${{ secrets.GPG_KEYID }}" -Dgpg.keyFilePath="${{ github.workspace }}/secret-key.gpg" release:perform
-
-      - name: Prepare release
-        run: |
-          mvn release:prepare
 
       - name: Push changes and tags
         run: |

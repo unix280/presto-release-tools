@@ -31,7 +31,7 @@ jobs:
         with:
           java-version: 8
           distribution: 'temurin'
-          cache: gradle
+          cache: maven
 
       - name: Set up git
         run: |

@@ -1,4 +1,4 @@
-name: Publish tempto release
+name: Publish release
 
 on:
   workflow_dispatch: # Allows manual triggering of the workflow

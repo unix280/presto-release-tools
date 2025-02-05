@@ -42,7 +42,7 @@ jobs:
 
       - name: Prepare release
         run: |
-          mvn release:preare
+          mvn release:prepare
 
       - name: Publish release
         run: |

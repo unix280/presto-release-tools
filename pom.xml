@@ -151,8 +151,8 @@
                     <version>${dep.nexus-staging-plugin.version}</version>
                     <extensions>true</extensions>
                     <configuration>
-                        <serverId>ossrh</serverId>
-                        <nexusUrl>https://d4ba-2620-1f7-2a01-6446-00-32-1c0.ngrok-free.app/</nexusUrl>
+                        <serverid>ossrh</serverid>
+                        <nexusurl>https://d4ba-2620-1f7-2a01-6446-00-32-1c0.ngrok-free.app/</nexusurl>
                     </configuration>
                 </plugin>
             </plugins>
@@ -172,4 +172,14 @@
             </build>
         </profile>
     </profiles>
+    <distributionManagement>
+        <repository>
+            <id>ossrh</id>
+            <url>https://d4ba-2620-1f7-2a01-6446-00-32-1c0.ngrok-free.app/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://d4ba-2620-1f7-2a01-6446-00-32-1c0.ngrok-free.app/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>

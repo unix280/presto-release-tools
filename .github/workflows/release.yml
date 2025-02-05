@@ -42,7 +42,6 @@ jobs:
 
       - name: Set up GPG key
         run: |
-          mkdir -f ~/.gnupg
           echo "${{ secrets.GPG_SECRET }}" > ${{ github.workspace }}/secret-key.gpg
           chmod 600 ${{ github.workspace }}/secret-key.gpg
           echo "allow-loopback-pinentry" > ~/.gnupg/gpg-agent.conf

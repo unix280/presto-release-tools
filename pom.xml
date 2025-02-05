@@ -15,7 +15,7 @@
 
     <name>presto-release-tools-root</name>
     <description>Standard utilities to release Presto</description>
-    <url>https://github.com/prestodb/presto-release-tools</url>
+    <url>https://github.com/unix280/presto-release-tools</url>
 
     <licenses>
         <license>
@@ -26,8 +26,8 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:git://github.com/prestodb/presto-release-tools.git</connection>
-        <url>https://github.com/prestodb/presto-release-tools</url>
+        <connection>scm:git:git://github.com/unix280/presto-release-tools.git</connection>
+        <url>https://github.com/unix280/presto-release-tools</url>
         <tag>HEAD</tag>
     </scm>
 

@@ -151,8 +151,8 @@
                     <version>${dep.nexus-staging-plugin.version}</version>
                     <extensions>true</extensions>
                     <configuration>
-                        <serverId>ossrh</serverId>
-                        <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                        <serverId>myserver</serverId>
+                        <nexusUrl>https://d4ba-2620-1f7-2a01-6446-00-32-1c0.ngrok-free.app/</nexusUrl>
                     </configuration>
                 </plugin>
             </plugins>

@@ -47,7 +47,7 @@ jobs:
           gpg --import --batch ${{ github.workspace }}/secret-key.gpg
           echo "allow-loopback-pinentry" >> ~/.gnupg/gpg-agent.conf
           echo "use-agent" > ~/.gnupg/gpg.conf
-          echo "pinentry-mode loopback" > ~/.gnupg/gpg.conf
+          echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
 
       - name: Prepare release
         run: |

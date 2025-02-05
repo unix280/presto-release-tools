@@ -44,12 +44,11 @@ jobs:
         run: |
           echo "${{ secrets.GPG_SECRET }}" > ${{ github.workspace }}/secret-key.gpg
           chmod 600 ${{ github.workspace }}/secret-key.gpg
-          mkdir -p ~/.gnupg
+          gpg --import --batch ${{ github.workspace }}/secret-key.gpg
           echo "allow-loopback-pinentry" > ~/.gnupg/gpg-agent.conf
           echo "use-agent" > ~/.gnupg/gpg.conf
           echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
           gpg-connect-agent reloadagent /bye
-          gpg --import --batch ${{ github.workspace }}/secret-key.gpg
 
       - name: Prepare release
         run: |

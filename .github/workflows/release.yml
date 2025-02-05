@@ -44,8 +44,8 @@ jobs:
         run: |
           echo "${{ secrets.GPG_SECRET }}" > ${{ github.workspace }}/secret-key.gpg
           chmod 600 ${{ github.workspace }}/secret-key.gpg
-          export GPG_TTY=$(tty)
           gpg --import --batch ${{ github.workspace }}/secret-key.gpg
+          export GPG_TTY=$(tty)
           echo "allow-loopback-pinentry" >> ~/.gnupg/gpg-agent.conf
           echo "use-agent" > ~/.gnupg/gpg.conf
           echo "pinentry-mode loopback" > ~/.gnupg/gpg.conf
@@ -58,6 +58,7 @@ jobs:
         run: |
           export NEXUS_USERNAME=${{ vars.NEXUS_USERNAME }}
           export NEXUS_PASSWORD=${{ secrets.NEXUS_PASSWORD }}
+          export GPG_TTY=$(tty)
           mvn -Dgpg.keyFingerprint="${{ secrets.GPG_KEYID }}" -Dgpg.passphrase="${{ secrets.GPG_PASSPHRASE }}" release:perform
 
       - name: Push changes and tags

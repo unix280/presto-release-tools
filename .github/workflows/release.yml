@@ -1,7 +1,7 @@
 name: Publish release
 
 on:
-  workflow_dispatch: # Allows manual triggering of the workflow
+  workflow_dispatch:
 
 jobs:
   publish-release:
@@ -45,6 +45,7 @@ jobs:
           echo '    </server>' >> ~/.m2/settings.xml
           echo '  </servers>' >> ~/.m2/settings.xml
           echo '</settings>' >> ~/.m2/settings.xml
+          cat ~/.m2/settings.xml
 
       - name: Set up git
         run: |
@@ -58,6 +59,7 @@ jobs:
           echo "${{ secrets.GPG_SECRET }}" > ${{ github.workspace }}/secret-key.gpg
           chmod 600 ${{ github.workspace }}/secret-key.gpg
           gpg --import --batch ${{ github.workspace }}/secret-key.gpg
+          rm -f ${{ github.workspace }}/secret-key.gpg
           echo "allow-loopback-pinentry" > ~/.gnupg/gpg-agent.conf
           echo "use-agent" > ~/.gnupg/gpg.conf
           echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
@@ -69,15 +71,12 @@ jobs:
 
       - name: Publish release
         run: |
-          cat ~/.gnupg/gpg.conf
-          cat ~/.gnupg/gpg-agent.conf
           export GPG_TTY=$(tty)
-          echo $GPG_TTY
-          export NEXUS_USERNAME=${{ vars.NEXUS_USERNAME }}
-          export NEXUS_PASSWORD=${{ secrets.NEXUS_PASSWORD }}
-          export GPG_PASSPHRASE=${{ secrets.GPG_PASSPHRASE }}
+          export NEXUS_USERNAME="${{ secrets.NEXUS_USERNAME }}"
+          export NEXUS_PASSWORD="${{ secrets.NEXUS_PASSWORD }}"
+          export GPG_PASSPHRASE="${{ secrets.GPG_PASSPHRASE }}"
           mvn -Dgpg.useagent=true -Dgpg.passphrase="${{ secrets.GPG_PASSPHRASE }}" package gpg:sign
-          echo mvn release:perform
+          mvn deploy
 
       - name: Push changes and tags
         run: |

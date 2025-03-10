@@ -57,11 +57,7 @@ jobs:
       - name: Update next release version
         run: |
           git reset --hard
-          mvn release:prepare --batch-mode \
-            -DskipTests \
-            -DautoVersionSubmodules \
-            -DdevelopmentVersion=${{ env.RELEASE_VERSION }} \
-            -DreleaseVersion=${{ env.RELEASE_VERSION }}
+          mvn release:prepare -DreleaseVersion=${{ env.RELEASE_VERSION }}
           grep -m 1 "<version>" pom.xml
           git log --pretty="format:%ce: %s" -5
           git push --follow-tags origin master

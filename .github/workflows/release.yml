@@ -57,7 +57,7 @@ jobs:
       - name: Update next release version
         run: |
           git reset --hard
-          mvnw release:prepare --batch-mode \
+          mvn release:prepare --batch-mode \
             -DskipTests \
             -DautoVersionSubmodules \
             -DdevelopmentVersion=${{ env.RELEASE_VERSION }} \

@@ -29,9 +29,9 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          java-version: 8
+          java-version: 11
           distribution: 'temurin'
-          cache: maven
+          overwrite-settings: true
           server-id: ossrh
           server-username: ${{ secrets.NEXUS_USERNAME }}
           server-password: ${{ secrets.NEXUS_PASSWORD }}
@@ -78,6 +78,7 @@ jobs:
 
       - name: Publish release
         run: |
+          cat ~/.m2/settings.xml
           mvn package gpg:sign deploy -Pdeploy-to-ossrh
 
       - name: Push changes and tags

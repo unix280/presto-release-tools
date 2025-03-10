@@ -57,7 +57,9 @@ jobs:
       - name: Prepare release
         run: |
           git reset --hard
+          cd presto-release-tools
           mvn release:prepare -DreleaseVersion=${{ env.RELEASE_VERSION }}
+          cd ..
           grep -m 1 "<version>" pom.xml
           git log --pretty="format:%ce: %s" -5
 

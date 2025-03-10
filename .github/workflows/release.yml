@@ -60,12 +60,11 @@ jobs:
           mvn release:prepare -DreleaseVersion=${{ env.RELEASE_VERSION }}
           grep -m 1 "<version>" pom.xml
           git log --pretty="format:%ce: %s" -5
-          git push --follow-tags origin master
 
       - name: Push release branch
         run: |
           git checkout ${{ env.RELEASE_VERSION }}
-          git log --pretty="format:%ce: %s" -3
+          git log --pretty="format:%ce: %s" -4
 
       - name: Publish release
         run: |
@@ -74,5 +73,5 @@ jobs:
       - name: Push changes and tags
         run: |
           git checkout master
-          git log --pretty="format:%ce: %s" -3
+          git log --pretty="format:%ce: %s" -5
           git push origin master --tags

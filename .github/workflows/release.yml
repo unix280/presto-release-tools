@@ -33,8 +33,8 @@ jobs:
           distribution: 'temurin'
           overwrite-settings: true
           server-id: ossrh
-          server-username: ${{ secrets.NEXUS_USERNAME }}
-          server-password: ${{ secrets.NEXUS_PASSWORD }}
+          server-username: NEXUS_USERNAME
+          server-password: NEXUS_PASSWORD
           gpg-private-key: ${{ secrets.GPG_SECRET }}
           gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
@@ -54,17 +54,12 @@ jobs:
           echo "RELEASE_VERSION=$RELEASE_VERSION"
           echo "In case cut release failed, please delete the tag ${RELEASE_VERSION} manually"
 
-      - name: Update next release version
+      - name: Prepare release
         run: |
           git reset --hard
           mvn release:prepare -DreleaseVersion=${{ env.RELEASE_VERSION }}
           grep -m 1 "<version>" pom.xml
           git log --pretty="format:%ce: %s" -5
-
-      - name: Push release branch
-        run: |
-          git checkout ${{ env.RELEASE_VERSION }}
-          git log --pretty="format:%ce: %s" -4
 
       - name: Set up GPG key
         run: |
@@ -78,8 +73,13 @@ jobs:
 
       - name: Publish release
         run: |
+          git checkout ${{ env.RELEASE_VERSION }}
+          git log --pretty="format:%ce: %s" -4
           cat ~/.m2/settings.xml
           mvn package gpg:sign deploy -Pdeploy-to-ossrh
+        env:
+          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME  }}
+          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
 
       - name: Push changes and tags
         run: |

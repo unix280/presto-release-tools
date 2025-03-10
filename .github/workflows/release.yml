@@ -80,8 +80,8 @@ jobs:
           mvn package gpg:sign deploy -Pdeploy-to-ossrh
           cd ..
         env:
-          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME  }}
-          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+          NEXUS_USERNAME: "${{ secrets.NEXUS_USERNAME }}"
+          NEXUS_PASSWORD: "${{ secrets.NEXUS_PASSWORD }}"
 
       - name: Push changes and tags
         run: |

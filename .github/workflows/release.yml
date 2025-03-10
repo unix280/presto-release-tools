@@ -68,7 +68,7 @@ jobs:
 
       - name: Publish release
         run: |
-          mvn package sign:sign deploy -Pdeploy-to-ossrh
+          mvn package gpg:sign deploy -Pdeploy-to-ossrh
 
       - name: Push changes and tags
         run: |

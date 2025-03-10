@@ -57,7 +57,7 @@ jobs:
       - name: Update next release version
         run: |
           git reset --hard
-          unset MAVEN_CONFIG && ./mvnw release:prepare --batch-mode \
+          mvnw release:prepare --batch-mode \
             -DskipTests \
             -DautoVersionSubmodules \
             -DdevelopmentVersion=${{ env.RELEASE_VERSION }} \

@@ -57,9 +57,7 @@ jobs:
       - name: Prepare release
         run: |
           git reset --hard
-          cd presto-release-tools
           mvn release:prepare -DreleaseVersion=${{ env.RELEASE_VERSION }}
-          cd ..
           grep -m 1 "<version>" pom.xml
           git log --pretty="format:%ce: %s" -5
 
@@ -78,7 +76,9 @@ jobs:
           git checkout ${{ env.RELEASE_VERSION }}
           git log --pretty="format:%ce: %s" -4
           cat ~/.m2/settings.xml
+          cd presto-release-tools
           mvn package gpg:sign deploy -Pdeploy-to-ossrh
+          cd ..
         env:
           NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME  }}
           NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}

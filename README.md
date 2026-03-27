@@ -4,9 +4,9 @@
 
 Tools to prepare Presto releases.
 
-To download the release tools executable.
+To download the release tools executable (replace `<VERSION>` with the desired version, e.g. 0.13).
 ```
-curl -L -o /tmp/presto_release "https://oss.sonatype.org/service/local/artifact/maven/redirect?g=com.facebook.presto&a=presto-release-tools&v=RELEASE&r=releases&c=executable&e=jar"
+curl -L -o /tmp/presto_release "https://github.com/prestodb/presto-release-tools/releases/download/<VERSION>/presto-release-tools-<VERSION>-executable.jar"
 chmod 755 /tmp/presto_release
 ```
 

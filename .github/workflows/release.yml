@@ -86,3 +86,20 @@ jobs:
           git checkout master
           git log --pretty="format:%ce: %s" -5
           git push origin master --tags
+
+      - name: Build executable jars
+        run: |
+          git checkout ${{ env.RELEASE_VERSION }}
+          mvn clean package -Pexecutable-jar -DskipTests
+
+      - name: Publish executable jars to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.RELEASE_VERSION }}
+          make_latest: true
+          files: |
+            presto-release-tools/target/presto-release-tools-${{ env.RELEASE_VERSION }}-executable.jar
+            presto-release-tools/target/presto-release-tools-${{ env.RELEASE_VERSION }}.tar.gz
+          fail_on_unmatched_files: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
